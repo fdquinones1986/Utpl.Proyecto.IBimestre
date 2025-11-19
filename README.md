@@ -8,6 +8,9 @@ Este proyecto contiene una API REST básica desarrollada con FastAPI para propó
 ```
 .
 ├── main.py              # Archivo principal con la aplicación FastAPI
+├── models/              # Modelos y DTOs de la aplicación
+│   ├── __init__.py      # Inicialización del módulo de modelos
+│   └── persona_dto.py   # DTOs para la entidad Persona
 ├── requirements.txt     # Dependencias del proyecto
 └── README.md           # Este archivo
 ```
@@ -82,6 +85,100 @@ Respuesta:
   "descripcion": "Esta es una API básica creada con FastAPI para propósitos educativos"
 }
 ```
+
+### 4. CRUD de Personas
+
+#### Obtener todas las personas
+```
+GET http://127.0.0.1:8000/personas
+```
+Respuesta:
+```json
+[
+  {
+    "id": 1,
+    "nombre": "Juan",
+    "apellido": "Pérez",
+    "edad": 30,
+    "email": "juan.perez@example.com",
+    "telefono": "+593987654321",
+    "direccion": "Av. Principal 123, Loja"
+  }
+]
+```
+
+#### Obtener una persona por ID
+```
+GET http://127.0.0.1:8000/personas/1
+```
+Respuesta:
+```json
+{
+  "id": 1,
+  "nombre": "Juan",
+  "apellido": "Pérez",
+  "edad": 30,
+  "email": "juan.perez@example.com",
+  "telefono": "+593987654321",
+  "direccion": "Av. Principal 123, Loja"
+}
+```
+
+#### Crear una nueva persona
+```
+POST http://127.0.0.1:8000/personas
+Content-Type: application/json
+
+{
+  "nombre": "María",
+  "apellido": "García",
+  "edad": 25,
+  "email": "maria.garcia@example.com",
+  "telefono": "+593987654322",
+  "direccion": "Calle Secundaria 456, Loja"
+}
+```
+Respuesta (201 Created):
+```json
+{
+  "id": 2,
+  "nombre": "María",
+  "apellido": "García",
+  "edad": 25,
+  "email": "maria.garcia@example.com",
+  "telefono": "+593987654322",
+  "direccion": "Calle Secundaria 456, Loja"
+}
+```
+
+#### Actualizar una persona
+```
+PUT http://127.0.0.1:8000/personas/1
+Content-Type: application/json
+
+{
+  "edad": 31,
+  "telefono": "+593987654999"
+}
+```
+Respuesta:
+```json
+{
+  "id": 1,
+  "nombre": "Juan",
+  "apellido": "Pérez",
+  "edad": 31,
+  "email": "juan.perez@example.com",
+  "telefono": "+593987654999",
+  "direccion": "Av. Principal 123, Loja"
+}
+```
+
+#### Eliminar una persona
+```
+DELETE http://127.0.0.1:8000/personas/1
+```
+Respuesta: 204 No Content
 
 ## Documentación Interactiva
 
