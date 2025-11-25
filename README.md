@@ -38,6 +38,12 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
+Si ves el error "command not found" al ejecutar `uvicorn`, usa el módulo de Python para invocarlo directamente:
+
+```bash
+python -m uvicorn main:app --reload
+```
+
 El servidor se iniciará en `http://127.0.0.1:8000`
 
 ### Opciones adicionales
