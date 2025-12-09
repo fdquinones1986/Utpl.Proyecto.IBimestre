@@ -5,8 +5,11 @@ Este es un esqueleto de API para enseñar a estudiantes
 
 from fastapi import FastAPI, HTTPException
 from modelos.persona_dto import Persona
+from db.supabase import create_supabase_client
 
 dbPersona = []
+#Crear el cliente de Supabase
+supabase = create_supabase_client()
 
 # Crear la instancia de FastAPI
 app = FastAPI(
@@ -56,7 +59,8 @@ def obtener_personas():
     """
     Endpoint para crear una nueva persona
     """
-    return dbPersona
+    data = supabase.table("personas").select("*").execute()
+    return data.data
 
 
 @app.get("/personas/{identificacion}", response_model=Persona, tags=["Personas"])
