@@ -51,7 +51,15 @@ def crear_persona(persona: Persona):
     """
     Endpoint para crear una nueva persona
     """
-    dbPersona.append(persona)
+    data = supabase.table("personas").insert({
+        "nombre": persona.nombre,
+        "apellido": persona.apellido,
+        "email": persona.email,
+        "edad": persona.edad,
+        "direccion": persona.direccion,
+        "telefono": persona.telefono,
+        "identificacion": persona.identificacion
+        }).execute()
     return persona
 
 @app.get("/personas", response_model=list[Persona], tags=["Personas"])
@@ -66,9 +74,9 @@ def obtener_personas():
 @app.get("/personas/{identificacion}", response_model=Persona, tags=["Personas"])
 def obtener_persona_por_identificacion(identificacion: str):
     """Buscar una persona por su identificación."""
-    for persona in dbPersona:
-        if persona.identificacion == identificacion:
-            return persona
+    data = supabase.table("personas").select("*").eq("identificacion", identificacion).execute()
+    if data.data:
+        return data.data[0]
     raise HTTPException(status_code=404, detail="Persona no encontrada")
 
 
@@ -78,13 +86,18 @@ def actualizar_persona(identificacion: str, persona_actualizada: Persona):
 
     La identificación de la ruta debe coincidir con la del cuerpo.
     """
-    if persona_actualizada.identificacion != identificacion:
-        raise HTTPException(status_code=400, detail="La identificación del cuerpo no coincide con la ruta")
-
-    for idx, persona in enumerate(dbPersona):
-        if persona.identificacion == identificacion:
-            dbPersona[idx] = persona_actualizada
-            return persona_actualizada
+    if identificacion != persona_actualizada.identificacion:
+        raise HTTPException(status_code=400, detail="La identificación en la ruta y el cuerpo no coinciden")
+    data = supabase.table("personas").update({
+        "nombre": persona_actualizada.nombre,   
+        "apellido": persona_actualizada.apellido,
+        "email": persona_actualizada.email,
+        "edad": persona_actualizada.edad,
+        "direccion": persona_actualizada.direccion,
+        "telefono": persona_actualizada.telefono,
+        }).eq("identificacion", identificacion).execute()
+    if data.data:
+        return persona_actualizada
     raise HTTPException(status_code=404, detail="Persona no encontrada")
 
 
@@ -94,9 +107,8 @@ def eliminar_persona(identificacion: str):
 
     Retorna la persona eliminada o 404 si no existe.
     """
-    for idx, persona in enumerate(dbPersona):
-        if persona.identificacion == identificacion:
-            # Remover y retornar la persona eliminada
-            return dbPersona.pop(idx)
+    data = supabase.table("personas").delete().eq("identificacion", identificacion).execute()
+    if data.data:
+        return data.data[0]
     raise HTTPException(status_code=404, detail="Persona no encontrada")
 
