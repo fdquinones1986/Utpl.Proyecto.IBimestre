@@ -12,7 +12,7 @@ dbPersona = []
 supabase = create_supabase_client()
 
 # Descripción completa de la API con Markdown
-description = """
+descriptionApi = """
 ## 🎓 API REST de Ejemplo - UTPL
 
 Esta API REST fue desarrollada con **FastAPI** para enseñar a estudiantes los conceptos fundamentales 
@@ -44,12 +44,19 @@ Puedes realizar operaciones CRUD completas:
 * Pydantic para validación de datos
 """
 
+tags_metadata = [
+    {
+        "name": "Personas",
+        "description": "Operaciones para gestionar personas"
+    }
+]
+
 # Crear la instancia de FastAPI
 app = FastAPI(
     title="API de Gestion de Personas",
-    description=description,
+    description=descriptionApi,
     version="1.0.0",
-    
+    openapi_tags=tags_metadata
 )
 
 
