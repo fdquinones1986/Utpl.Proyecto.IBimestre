@@ -11,11 +11,45 @@ dbPersona = []
 #Crear el cliente de Supabase
 supabase = create_supabase_client()
 
+# Descripción completa de la API con Markdown
+description = """
+## 🎓 API REST de Ejemplo - UTPL
+
+Esta API REST fue desarrollada con **FastAPI** para enseñar a estudiantes los conceptos fundamentales 
+de desarrollo de APIs modernas y la interoperabilidad de sistemas.
+
+### 📋 Funcionalidades principales
+
+#### Gestión de Personas
+Puedes realizar operaciones CRUD completas:
+* **Crear** nuevas personas con validación de datos
+* **Consultar** todas las personas o buscar por identificación
+* **Actualizar** información de personas existentes
+* **Eliminar** registros de personas
+
+#### Base de Datos
+* Integración con **Supabase** como backend
+* Validación automática de datos con Pydantic
+* Manejo de errores HTTP
+
+### 👨‍🏫 Información del Curso
+**Materia:** Interoperabilidad Empresarial 
+**Institución:** Universidad Técnica Particular de Loja (UTPL)  
+**Email:** fdquinones@utpl.edu.ec  
+
+### 🚀 Tecnologías
+* FastAPI 
+* Python 3.8+
+* Supabase
+* Pydantic para validación de datos
+"""
+
 # Crear la instancia de FastAPI
 app = FastAPI(
-    title="API de Ejemplo UTPL - fdquinones@utpl.edu.ec",
-    description="API REST básica para aprender FastAPI en Interoperabilidad de Sistemas",
-    version="1.0.0"
+    title="API de Gestion de Personas",
+    description=description,
+    version="1.0.0",
+    
 )
 
 
