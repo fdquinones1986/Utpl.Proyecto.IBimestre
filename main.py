@@ -4,6 +4,7 @@ Este es un esqueleto de API para enseñar a estudiantes
 """
 
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from modelos.persona_dto import Persona
 from db.supabase import create_supabase_client
 
@@ -57,6 +58,21 @@ app = FastAPI(
     description=descriptionApi,
     version="1.0.0",
     openapi_tags=tags_metadata
+)
+
+# Configurar CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://localhost:8000",
+        "https://ai.google.dev",  # Google AI Studio
+        "https://aistudio.google.com",  # Google AI Studio (URL alternativa)
+        "*"  # Permitir todos los orígenes (solo para desarrollo)
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
